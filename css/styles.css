@@ -1,12 +1,13 @@
+/* GLOBAL SETTINGS */
 :root {
-    --primary-color: #3a3a3a;
-    --nav-bg: #26272b;
-    --accent-blue: #00a6d6;
+    --primary-color: #3a3a3a; /* Dark gray text */
+    --nav-bg: #26272b;        /* Dark nav background */
+    --accent-blue: #00a6d6;   /* The bright blue for text/backgrounds */
     --white: #ffffff;
 }
 
 body {
-    font-family: 'Times New Roman', Times, serif;
+    font-family: 'Times New Roman', Times, serif; /* Matches the serif font in image */
     margin: 0;
     padding: 0;
     color: var(--primary-color);
@@ -21,7 +22,7 @@ a {
     text-decoration: none;
 }
 
-/* Header & Navigation */
+/* HEADER & NAV */
 #top-header {
     display: flex;
     justify-content: space-between;
@@ -36,7 +37,7 @@ a {
 }
 
 #tools a {
-    font-family: sans-serif;
+    font-family: sans-serif; /* "My Account" is sans-serif in the image */
     color: var(--primary-color);
     font-size: 0.9rem;
     text-transform: uppercase;
@@ -51,7 +52,7 @@ nav ul {
     padding: 0;
     margin: 0;
     display: flex;
-    justify-content: space-around;
+    justify-content: space-around; /* Spreads links evenly */
 }
 
 nav li a {
@@ -62,17 +63,18 @@ nav li a {
     font-size: 1.1rem;
 }
 
-/* Main content padding */
+/* MAIN CONTENT PADDING */
 main {
     padding: 1rem;
 }
 
-/* Hero section */
+/* HERO SECTION (The Car area) */
 .main-heading {
     margin-top: 0;
 }
 
 #hero {
+    /* Use Grid to put text next to image, even on mobile */
     display: grid;
     grid-template-columns: 1fr 1fr; 
     background-color: var(--white);
@@ -81,7 +83,7 @@ main {
 }
 
 #hero-text {
-    z-index: 2;
+    z-index: 2; /* Ensures text stays on top if they overlap */
 }
 
 #hero-text h2 {
@@ -98,40 +100,41 @@ main {
 }
 
 #hero-image {
+    /* This pulls the car slightly left to match the "cramped" look of the screenshot */
     margin-left: -20px; 
 }
 
-/* Reviews section */
+/* REVIEWS SECTION */
 #reviews ul {
     list-style-type: disc;
     padding-left: 1.5rem;
     line-height: 1.6;
 }
 
-/* Upgrades section */
+/* UPGRADES SECTION (The Blue Boxes) */
 .upgrade-grid {
     display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 15px;
+    grid-template-columns: 1fr 1fr; /* 2 columns side-by-side */
+    gap: 15px; /* Space between boxes */
 }
 
 .upgrade-card {
     text-align: center;
-    border: 1px solid #ccc;
+    border: 1px solid #ccc; /* Thin border */
 }
 
 .img-box {
-    background-color: var(--accent-blue);
+    background-color: var(--accent-blue); /* The blue background behind images */
     padding: 1rem;
-    border-bottom: 3px solid #000;
+    border-bottom: 3px solid #000; /* Looks like a thick bottom border in image */
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100px;
+    height: 100px; /* Force consistent height */
 }
 
 .img-box img {
-    max-height: 80px;
+    max-height: 80px; /* Keeps icons from getting too big */
 }
 
 .upgrade-card a {
@@ -143,53 +146,19 @@ main {
 }
 
 @media screen and (min-width: 800px) {
-    
     body {
-        /* Adds the checkerboard background */
-        background-image: url('/images/site/checkerboard.jpg'); 
-        margin: 20px;
-    }
-
-    /* The Main Container Box */
-    #wrapper {
-        background-color: var(--white);
-        width: 90%;
-        max-width: 1000px;
+        max-width: 960px;
         margin: 0 auto;
-        border: 5px solid var(--accent-blue);
-        border-radius: 10px;
-        padding: 20px;
+        border: 2px solid var(--accent-color);
     }
 
-    /* Layout: Navigation Bar */
-    nav ul {
-        justify-content: space-between; /* Spreads nav items out more nicely */
-    }
-
-    /* Layout: Hero Section */
-    #hero {
-        gap: 50px; 
-    }
-
-    #hero-text {
-        padding-top: 30px;
-    }
-
-    /* Layout: Bottom Content (Reviews & Upgrades) */
-    .lower-content {
+    #bottom-content {
         display: flex;
         flex-direction: row-reverse;
         justify-content: space-between;
-        gap: 40px;
-        margin-top: 30px;
     }
 
-    /* Force both sections to take up equal width */
-    #reviews, #upgrades {
-        flex: 1; 
-    }
-
-    .upgrade-grid {
-        gap: 20px;
+    #upgrades, #reviews {
+        width: 48%;
     }
 }
