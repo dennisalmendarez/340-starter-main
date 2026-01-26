@@ -72,6 +72,13 @@ Util.buildClassificationGrid = async function(data){
 Util.buildInventoryDetail = async function(vehicle) {
   let grid
   if(vehicle){
+    const price = new Intl.NumberFormat('en-US', {
+        style: 'currency',
+        currency: 'USD'
+    }).format(vehicle.inv_price)
+
+    const miles = new Intl.NumberFormat('en-US').format(vehicle.inv_miles)
+
     // LOGIC TO FIX IMAGE PATHS
     let imgPath = vehicle.inv_image;
     if (imgPath.includes('/images/') && !imgPath.includes('/vehicles/')) {
@@ -79,31 +86,32 @@ Util.buildInventoryDetail = async function(vehicle) {
     }
 
     grid = '<div id="inv-details">'
-    // Image Container
+    
+    // 1. Image Container
     grid += '<div class="detail-image">'
     grid += '<img src="' + imgPath + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors" />'
     grid += '</div>'
     
-    // Details Container
+    // 2. Details Container
     grid += '<div class="details-content">'
     
-    // Price Block (Styled like the example)
-    grid += '<div class="price-box">'
-    grid += '<h3>No-Haggle Price</h3>'
-    grid += '<h2 class="price-display">$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</h2>'
-    grid += '</div>'
+        // Price Box (Styled to look like the rubric example)
+        grid += '<div class="price-box">'
+        grid += '<h2>No-Haggle Price</h2>'
+        grid += '<h2 class="price-display">' + price + '</h2>'
+        grid += '</div>'
 
-    // Vehicle Specs
-    grid += '<div class="specs-list">'
-    grid += '<p><strong>Make:</strong> ' + vehicle.inv_make + '</p>'
-    grid += '<p><strong>Model:</strong> ' + vehicle.inv_model + '</p>'
-    grid += '<p><strong>Year:</strong> ' + vehicle.inv_year + '</p>'
-    grid += '<p><strong>Mileage:</strong> ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
-    grid += '<p><strong>Color:</strong> ' + vehicle.inv_color + '</p>'
-    grid += '</div>'
+        // Specs List (Make, Model, Year, Miles)
+        grid += '<div class="specs-list">'
+        grid += '<p><strong>Make:</strong> ' + vehicle.inv_make + '</p>'
+        grid += '<p><strong>Model:</strong> ' + vehicle.inv_model + '</p>'
+        grid += '<p><strong>Year:</strong> ' + vehicle.inv_year + '</p>'
+        grid += '<p><strong>Mileage:</strong> ' + miles + '</p>'
+        grid += '<p><strong>Color:</strong> ' + vehicle.inv_color + '</p>'
+        grid += '</div>'
 
-    // Description
-    grid += '<p class="desc"><strong>Description:</strong> ' + vehicle.inv_description + '</p>'
+        // Description
+        grid += '<p class="desc"><strong>Description:</strong> ' + vehicle.inv_description + '</p>'
     
     grid += '</div>' // End details-content
     grid += '</div>' // End inv-details
