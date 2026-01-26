@@ -1,3 +1,4 @@
+// server.js - main server file
 /* ***********************
  * Require Statements
  *************************/
@@ -23,14 +24,10 @@ app.set("layout", "./layouts/layout") // looks in views/layouts/layout.ejs
 // Static files (CSS, images, etc.) - IMPORTANT ADDITION
 app.use(express.static("public")) 
 app.use("/inv", inventoryRoute)
-utilities.handleErrors(baseController.buildHome)
 // Index route
 app.get("/", utilities.handleErrors(baseController.buildHome))
 
-
 // Application routes
-app.use(static)
-app.get("/", baseController.buildHome)
 // File Not Found Route - must be last route in list
 app.use(async (req, res, next) => {
   next({status: 404, message: 'Sorry, we appear to have lost that page.'})

@@ -1,3 +1,4 @@
+// basecontroller.js - controller for home route
 const utilities = require("../utilities")
 const baseController = {}
 

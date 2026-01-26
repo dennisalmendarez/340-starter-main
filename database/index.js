@@ -1,3 +1,4 @@
+// database/index.js - database connection setup
 const { Pool } = require("pg")
 require("dotenv").config()
 /* ***************

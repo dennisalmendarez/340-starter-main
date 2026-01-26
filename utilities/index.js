@@ -1,3 +1,4 @@
+// utilities/index.js - utility functions for the application
 const invModel = require("../models/inventory-model")
 const Util= {}
 
@@ -33,10 +34,17 @@ Util.buildClassificationGrid = async function(data){
   if(data.length > 0){
     grid = '<ul id="inv-display">'
     data.forEach(vehicle => { 
+      
+      // FIX: Add '/vehicles' to the path if it's missing
+      let thumb = vehicle.inv_thumbnail
+      if (thumb.includes('/images/') && !thumb.includes('/vehicles/')) {
+        thumb = thumb.replace('/images/', '/images/vehicles/')
+      }
+
       grid += '<li>'
       grid +=  '<a href="../../inv/detail/'+ vehicle.inv_id 
       + '" title="View ' + vehicle.inv_make + ' '+ vehicle.inv_model 
-      + 'details"><img src="' + vehicle.inv_thumbnail 
+      + 'details"><img src="' + thumb 
       +'" alt="Image of '+ vehicle.inv_make + ' ' + vehicle.inv_model 
       +' on CSE Motors" /></a>'
       grid += '<div class="namePrice">'
@@ -54,6 +62,53 @@ Util.buildClassificationGrid = async function(data){
     grid += '</ul>'
   } else { 
     grid += '<p class="notice">Sorry, no matching vehicles could be found.</p>'
+  }
+  return grid
+}
+
+/* **************************************
+* Build the inventory detail view HTML
+* ************************************ */
+Util.buildInventoryDetail = async function(vehicle) {
+  let grid
+  if(vehicle){
+    // LOGIC TO FIX IMAGE PATHS
+    let imgPath = vehicle.inv_image;
+    if (imgPath.includes('/images/') && !imgPath.includes('/vehicles/')) {
+        imgPath = imgPath.replace('/images/', '/images/vehicles/');
+    }
+
+    grid = '<div id="inv-details">'
+    // Image Container
+    grid += '<div class="detail-image">'
+    grid += '<img src="' + imgPath + '" alt="Image of ' + vehicle.inv_make + ' ' + vehicle.inv_model + ' on CSE Motors" />'
+    grid += '</div>'
+    
+    // Details Container
+    grid += '<div class="details-content">'
+    
+    // Price Block (Styled like the example)
+    grid += '<div class="price-box">'
+    grid += '<h3>No-Haggle Price</h3>'
+    grid += '<h2 class="price-display">$' + new Intl.NumberFormat('en-US').format(vehicle.inv_price) + '</h2>'
+    grid += '</div>'
+
+    // Vehicle Specs
+    grid += '<div class="specs-list">'
+    grid += '<p><strong>Make:</strong> ' + vehicle.inv_make + '</p>'
+    grid += '<p><strong>Model:</strong> ' + vehicle.inv_model + '</p>'
+    grid += '<p><strong>Year:</strong> ' + vehicle.inv_year + '</p>'
+    grid += '<p><strong>Mileage:</strong> ' + new Intl.NumberFormat('en-US').format(vehicle.inv_miles) + '</p>'
+    grid += '<p><strong>Color:</strong> ' + vehicle.inv_color + '</p>'
+    grid += '</div>'
+
+    // Description
+    grid += '<p class="desc"><strong>Description:</strong> ' + vehicle.inv_description + '</p>'
+    
+    grid += '</div>' // End details-content
+    grid += '</div>' // End inv-details
+  } else { 
+    grid += '<p class="notice">Sorry, vehicle details could not be found.</p>'
   }
   return grid
 }
