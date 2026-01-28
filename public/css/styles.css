@@ -291,3 +291,104 @@ main {
         border-left: 5px solid #333; /* Nice accent bar on the left */
     }
 }
+
+/* Account Views (Login & Register) */
+.login-container {
+    max-width: 400px;
+    margin: 2rem auto;
+    padding: 2rem;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    background-color: #f9f9f9;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+}
+
+.login-container h1 {
+    text-align: center;
+    color: #333;
+    margin-bottom: 1.5rem;
+}
+
+.login-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.login-container label {
+    margin-bottom: 0.5rem;
+    font-weight: bold;
+    color: #555;
+}
+
+.login-container input {
+    padding: 0.75rem;
+    margin-bottom: 1.25rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-size: 1rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* Focus effect for better UX */
+.login-container input:focus {
+    border-color: #007BFF;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+
+.login-container button {
+    padding: 0.75rem;
+    background-color: #007BFF; 
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    margin-top: 1rem;
+}
+
+.login-container button:hover {
+    background-color: #0056b3;
+}
+
+.register-link {
+    text-align: center;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+}
+
+/* Flash Message Styling */
+.notice {
+    padding: 1rem;
+    margin: 1rem auto;
+    max-width: 400px;
+    background-color: #ffebee;
+    color: #c62828;
+    border: 1px solid #ef9a9a;
+    border-radius: 4px;
+    list-style: none;
+}
+
+/* Registration Password Rules */
+.password-rules {
+    display: block;
+    font-size: 0.8rem;
+    color: #666;
+    background-color: #e9ecef;
+    padding: 10px;
+    border-radius: 4px;
+    margin-bottom: 1rem;
+    border-left: 3px solid #007BFF;
+    line-height: 1.4;
+}
+
+/* Visual validation for the password field */
+.login-container input:valid {
+    border-left: 4px solid #28a745;
+}
+
+.login-container input:invalid:not(:placeholder-shown) {
+    border-left: 4px solid #dc3545;
+}
