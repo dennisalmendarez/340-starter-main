@@ -458,3 +458,38 @@ main {
 .form-container button:hover {
     background-color: #0056b3;
 }
+
+#inventoryDisplay {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+#inventoryDisplay td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+button:disabled {
+  background-color: #cccccc;
+  color: #666666;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+/* Container for the account links in the header */
+#tools {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+#tools a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+#tools a:hover {
+    text-decoration: underline;
+}

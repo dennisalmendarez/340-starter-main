@@ -27,6 +27,15 @@ router.post(
 // Route to build add inventory view
 router.get("/add-inventory", utilities.handleErrors(invController.buildAddInventory));
 
+
+// Route to return JSON data for AJAX
+router.get("/getInventory/:classification_id", utilities.handleErrors(invController.getInventoryJSON))
+
+// Route to build edit inventory view
+router.get(
+  "/edit/:inv_id", utilities.handleErrors(invController.editInventoryView)
+)
+
 // Route to process add inventory
 router.post(
   "/add-inventory",
@@ -34,5 +43,25 @@ router.post(
   validate.checkInventoryData,
   utilities.handleErrors(invController.addInventory)
 )
+
+// Route to handle the actual update of inventory data
+router.post(
+  "/update/",
+  validate.newInventoryRules(),
+  validate.checkUpdateData,
+  utilities.handleErrors(invController.updateInventory)
+)
+
+// Route to build delete confirmation view
+router.get(
+  "/delete/:inv_id", 
+  utilities.handleErrors(invController.deleteView)
+);
+
+// Route to handle the deletion process
+router.post(
+  "/delete/", 
+  utilities.handleErrors(invController.deleteItem)
+);
 
 module.exports = router;
