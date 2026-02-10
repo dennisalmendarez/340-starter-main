@@ -1,0 +1,11 @@
+<!-- views/account/account.ejs -->
+<% if (messages && messages.length) { %>
+  <%- messages() %>
+<% } %>
+
+<% if (errors) { %>
+  <%- errors %>
+<% } %>
+
+<h1>Account Management</h1>
+<p>You're logged in</p>

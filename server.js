@@ -1,4 +1,6 @@
 // server.js - main server file
+
+const cookieParser = require("cookie-parser")
 /* ***********************
  * Require Statements
  *************************/
@@ -28,6 +30,9 @@ const bodyParser = require("body-parser")
   saveUninitialized: true,
   name: 'sessionId',
 }))
+
+app.use(cookieParser())
+app.use(utilities.checkJWTToken)
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
