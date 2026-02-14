@@ -26,11 +26,11 @@ async function accountLogin(req, res) {
   try {
     if (await bcrypt.compare(account_password, accountData.account_password)) {
       delete accountData.account_password
-      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
+      const accessToken = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600})
       if(process.env.NODE_ENV === 'development') {
-        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 })
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000})
       } else {
-        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
+        res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000})
       }
       return res.redirect("/account/")
     }
@@ -166,11 +166,13 @@ async function updateAccount(req, res) {
   )
 
   if (updateResult) {
-    // Regenerate JWT token if email or name changed
     delete updateResult.account_password
-    const accessToken = jwt.sign(updateResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 })
-    res.cookie("jwt", accessToken, { httpOnly: true, secure: true, maxAge: 3600 * 1000 })
-    
+    const accessToken = jwt.sign(updateResult, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600})
+    res.cookie("jwt", accessToken, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV !== "development",
+      maxAge: 3600 * 1000,
+    })
     req.flash("notice", "Account updated successfully.")
     res.redirect("/account/")
   } else {
@@ -196,7 +198,6 @@ async function updatePassword(req, res) {
 
   let hashedPassword
   try {
-    // Hash the password before sending it to the model
     hashedPassword = await bcrypt.hash(account_password, 10)
   } catch (error) {
     req.flash("notice", "Sorry, there was an error processing the password update.")

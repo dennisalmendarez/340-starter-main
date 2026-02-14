@@ -9,7 +9,6 @@ require("dotenv").config()
  ************************** */
 Util.getNav = async function (req, res, next) {
   let data = await invModel.getClassifications()
-  // console.log(data)
   let list = "<ul>"
   list += '<li><a href="/" title="Home page">Home</a></li>'
   data.rows.forEach((row) => {
@@ -97,7 +96,7 @@ Util.buildInventoryDetail = async function(vehicle) {
     // 2. Details Container
     grid += '<div class="details-content">'
     
-        // Price Box (Styled to look like the rubric example)
+        // Price Box
         grid += '<div class="price-box">'
         grid += '<h2>No-Haggle Price</h2>'
         grid += '<h2 class="price-display">' + price + '</h2>'
@@ -112,11 +111,10 @@ Util.buildInventoryDetail = async function(vehicle) {
         grid += '<p><strong>Color:</strong> ' + vehicle.inv_color + '</p>'
         grid += '</div>'
 
-        // Description
         grid += '<p class="desc"><strong>Description:</strong> ' + vehicle.inv_description + '</p>'
     
-    grid += '</div>' // End details-content
-    grid += '</div>' // End inv-details
+    grid += '</div>'
+    grid += '</div>'
   } else { 
     grid += '<p class="notice">Sorry, vehicle details could not be found.</p>'
   }

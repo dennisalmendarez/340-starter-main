@@ -1,8 +1,19 @@
 <!-- views/inventory/detail.ejs -->
 <% if (title) { %>
     <h1><%= title %></h1>
-<% } else {
-    res.redirect('/')
-} %>
+<% } else { %>
+    <% res.redirect('/') %>
+<% } %>
 
 <%- grid %>
+
+<% if (locals.loggedin) { %>
+    <form action="/account/saved/add" method="post" style="margin-top: 1rem;">
+        <input type="hidden" name="inv_id" value="<%= inv_id %>">
+        <button type="submit">Save Vehicle</button>
+    </form>
+<% } else { %>
+    <p style="margin-top: 1rem;">
+        <a href="/account/login">Log in</a> to save this vehicle.
+    </p>
+<% } %>

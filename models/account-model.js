@@ -90,5 +90,3 @@ module.exports = {
   updateAccount, 
   updatePassword 
 }
-
-module.exports = { registerAccount, checkExistingEmail, getAccountByEmail}

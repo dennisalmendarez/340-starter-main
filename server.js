@@ -16,6 +16,7 @@ const session = require("express-session")
 const pool = require('./database/')
 const accountRoute = require("./routes/accountRoute")
 const bodyParser = require("body-parser")
+const savedRoute = require("./routes/savedRoute")
 
 /* ***********************
  * Middleware
@@ -41,6 +42,8 @@ app.use(function(req, res, next){
   next()
 })
 
+app.use("/account/saved", savedRoute)
+
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: true }))
 
@@ -54,7 +57,6 @@ app.set("layout", "./layouts/layout") // looks in views/layouts/layout.ejs
 /* ***********************
  * Routes
  *************************/
-// Static files (CSS, images, etc.) - IMPORTANT ADDITION
 app.use(express.static("public")) 
 app.use("/inv", inventoryRoute)
 // Index route

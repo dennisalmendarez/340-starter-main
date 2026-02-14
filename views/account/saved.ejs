@@ -1,0 +1,35 @@
+<%- messages() %>
+
+<div class="account-container">
+    <h1><%= title %></h1>
+
+    <% if (!saved || saved.length === 0) { %>
+        <p>You have no saved vehicles yet.</p>
+        <p><a href="/inv/">Browse inventory</a></p>
+    <% } else { %>
+        <ul id="inv-display">
+        <% saved.forEach(item => { %>
+            <li>
+            <a href="/inv/detail/<%= item.inv_id %>">
+                <img src="<%= item.inv_thumbnail %>" alt="Image of <%= item.inv_make %> <%= item.inv_model %>">
+            </a>
+
+            <div class="namePrice">
+                <hr />
+                <h2>
+                <a href="/inv/detail/<%= item.inv_id %>">
+                    <%= item.inv_make %> <%= item.inv_model %> (<%= item.inv_year %>)
+                </a>
+                </h2>
+                <span>$<%= new Intl.NumberFormat('en-US').format(item.inv_price) %></span>
+
+                <form action="/account/saved/remove" method="post" style="margin-top: .5rem;">
+                <input type="hidden" name="inv_id" value="<%= item.inv_id %>">
+                <button type="submit">Remove</button>
+                </form>
+            </div>
+            </li>
+        <% }) %>
+        </ul>
+    <% } %>
+</div>

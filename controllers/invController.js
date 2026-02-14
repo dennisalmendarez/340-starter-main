@@ -12,7 +12,14 @@ invCont.buildByClassificationId = async function (req, res, next) {
   const data = await invModel.getInventoryByClassificationId(classification_id)
   const grid = await utilities.buildClassificationGrid(data)
   let nav = await utilities.getNav()
-  const className = data[0].classification_name
+
+  let className = "Vehicles"
+  if (data && data.length > 0) {
+    className = data[0].classification_name
+  } else {
+    className = "No Vehicles Found"
+  }
+
   res.render("./inventory/classification", {
     title: className + " vehicles",
     nav,
@@ -26,8 +33,7 @@ invCont.buildByClassificationId = async function (req, res, next) {
 invCont.buildByInventoryId = async function (req, res, next) {
   const inv_id = req.params.invId
   const data = await invModel.getInventoryByInventoryId(inv_id)
-  
-  // VALIDATION: If the car doesn't exist, we must stop here to prevent a crash
+
   if(!data) {
      next({status: 404, message: 'Sorry, we cannot find that vehicle.'})
      return
@@ -40,6 +46,7 @@ invCont.buildByInventoryId = async function (req, res, next) {
     title: title,
     nav,
     grid,
+    inv_id: data.inv_id
   })
 }
 
@@ -49,12 +56,10 @@ invCont.buildByInventoryId = async function (req, res, next) {
 invCont.buildBroken = async function (req, res, next) {
   // Creating a 500 error intentionally
   let nav = await utilities.getNav()
-  res.render("inventory/broken", { // This view doesn't exist, or we can just throw error
+  res.render("inventory/broken", {
       title: "Broken",
       nav
   })
-  // Ideally, the assignment wants an actual error thrown in code, like:
-  // throw new Error("This is a forced 500 error.")
 }
 
 /* ***************************
@@ -67,7 +72,7 @@ invCont.buildManagement = async function (req, res, next) {
   res.render("./inventory/management", {
     title: "Vehicle Management",
     nav,
-    classificationSelect, // Pass the list to the view
+    classificationSelect,
     errors: null,
   })
 }
@@ -178,16 +183,13 @@ invCont.getInventoryJSON = async (req, res, next) => {
 invCont.editInventoryView = async function (req, res, next) {
   const inv_id = parseInt(req.params.inv_id)
   let nav = await utilities.getNav()
-  
-  // Note: Ensure your model has getInventoryByInventoryId (which yours does!)
   const itemData = await invModel.getInventoryByInventoryId(inv_id)
   
   if (!itemData) {
     req.flash("notice", "Vehicle not found.")
     return res.redirect("/inv/")
   }
-
-  // Build the classification list and pre-select the current category
+  
   const classificationSelect = await utilities.buildClassificationList(itemData.classification_id)
   
   const itemName = `${itemData.inv_make} ${itemData.inv_model}`
